@@ -1,3 +1,4 @@
 
-# To run the simulation write hte following command
+# Running the simulation
+To run the simulation write the following command. 
 ./Allrun
