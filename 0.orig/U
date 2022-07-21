@@ -1,0 +1,79 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1812                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      binary;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    ".*"
+    {
+        type           fixedValue;
+        value          $internalField;
+    }
+
+    cylinder                                       // vessel UND stirrer; entgegen ".*"
+    {
+        type        fixedValue;
+        value       $internalField;
+    } 
+                                           // vessel UND stirrer; entgegen ".*"
+    outlet
+    {
+        type            pressureInletOutletVelocity;
+        phi             phi;
+        value           $internalField;
+    }
+    inlet                                       // vessel UND stirrer; entgegen ".*"
+    {
+       type        fixedValue;
+       value       $internalField;
+    }/**/
+    out
+    {
+        type        flowRateOutletVelocity;
+        volumetricFlowRate  5.555556e-7;     // mass flow rate in cubic meter/s
+        value       uniform (0 0 0);
+    }
+    in                                       // vessel UND stirrer; entgegen ".*"
+    {
+        type        flowRateInletVelocity;
+        volumetricFlowRate  5.555556e-7;     // mass flow rate in cubic meter/s
+        value       uniform (0 0 0);
+    }  
+
+    element
+    {
+       type            movingWallVelocity;      // bewegte Wand
+       value           $internalField;          // internes, vorgegebenes Feld
+    } 
+   
+    AMI1                                        // AMI für Schnellläufer; cyclic
+    {
+        type            cyclicAMI;
+        value           $internalField;
+    }
+
+    AMI2                                        // AMI für Schnellläufer; cyclic
+    {
+        type            cyclicAMI;
+        value           $internalField;
+    }
+}
+
+
+// ************************************************************************* //

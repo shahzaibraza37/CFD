@@ -1,0 +1,68 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1812                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p_rgh;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions       [1 -1 -2 0 0 0 0];
+
+internalField   uniform 1e5;
+
+boundaryField
+{
+    cylinder                                       // alle nicht individuell definiteren Patches
+    {
+         type           fixedFluxPressure;      // feststehender Wert
+    }
+    outlet                                        // alle nicht individuell definiteren Patches
+    {
+        type            fixedValue;
+        value           $internalField;		// feststehender Wert
+    }
+    inlet                                        // alle nicht individuell definiteren Patches
+	{
+        type           fixedFluxPressure;
+    }/**/
+    out                                       // alle nicht individuell definiteren Patches
+    {
+       type           fixedFluxPressure;
+    }
+    in                                        // alle nicht individuell definiteren Patches
+	{
+        type           fixedFluxPressure;
+    }/**/
+            
+    element                                       // alle nicht individuell definiteren Patches
+    {
+         type           fixedFluxPressure;  // feststehender Wert
+    }
+
+    ".*"
+    {
+        type            fixedFluxPressure;
+    }
+ 
+    AMI1                                      // AMI für Schnellläufer; cyclic
+    {
+        type            cyclicAMI;
+        value           $internalField;
+    }
+
+    AMI2                                      // AMI für Schnellläufer; cyclic
+    {
+        type            cyclicAMI;
+        value           $internalField;
+    }
+}
+
+// ************************************************************************* //
