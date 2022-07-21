@@ -1,4 +1,4 @@
-# Development of a CFD simulation environment for the determination of characteristic stress parameters in an extrusion device -->
+# Development of a CFD simulation environment for the determination of characteristic stress parameters in an extrusion device
 
 A simulation is set up to determine characteristic stress parameters in an
 extrusion device, which is seen as future industrial standard in lithium-ion battery slurry
